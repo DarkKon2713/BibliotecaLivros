@@ -1,5 +1,5 @@
+print(" Bem vindo a Calculadora Eletrica.\n")
 l = [0, 0, 0, 0]
-
 # l[0]=tensao
 # l[1]=corrente
 # l[2]=potencia
@@ -60,45 +60,48 @@ def opcao():
             
             if (opc == "V" or opc == "v"):
                  try:
-                     v = int(input("\nDigite o valor da Tensão:"))
+                     v =float(input("\nDigite o valor da Tensão:"))
                      l[0] = v
                      contador = contador+1
                  except:
                    print("\nError\n")   
             if (opc =="I" or opc=="i"):
                   try:
-                    i= int(input("\nDigite o valor da Corrente: "))
+                    i= float(input("\nDigite o valor da Corrente: "))
                     l[1]=i
                     contador=contador+1
                   except:
                     print("\nError\n")
             if (opc=="P" or opc=="p"):
-                  try:
-                    p=int(input("\nDigite o valor da Potencia:"))
-                    l[2]=p
-                    contador=contador+1
-                  except:  
-                    print("\nError\n")
+                  while l[2]==0:
+                    try:
+                        p=float(input("\nDigite o valor da Potencia:"))
+                        l[2]=p
+                        contador=contador+1
+                    except:  
+                        print("\nDigite um valor valido para Potencia.\n")
             if (opc=="R" or opc=="r"):
-                  try:
-                    r=int(input("\nDigite o valor da Resistencia: "))
-                    l[3]=r
-                    contador=contador+1
-                  except:
-                    print("\nError\n")
-            else:
-              print("\nDigite uma opçao valida.\n")           
+                  while l[3]==0:
+                      try:
+                          r=float(input("\nDigite o valor da Resistencia: "))
+                          l[3]=r
+                          contador=contador+1
+                      except:
+                           print("\nDigite um valor valido para Resistencia.\n")
+                    
       return l
     
-print(" Bem vindo a Calculadora Eletrica.\n")
-opcao()
-print(l)
-calculadora()
-print(l)
-print(f""" 
-          Tensao:{l[0]}
-          Corrente:{l[1]}
-          Potencia:{l[2]}
-          Resistencia:{l[3]}
+def VIPR():
+      
+      opcao()
+      print(l)
+      calculadora()
+      print(l)
+      print(f""" 
+                Tensao:{l[0]}
+                Corrente:{l[1]}
+                Potencia:{l[2]}
+                Resistencia:{l[3]}
            
-          """)
+            """)
+VIPR()
