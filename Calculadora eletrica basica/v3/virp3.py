@@ -18,12 +18,6 @@ def menu():
     
     return
    
- 
-
-   
-
-
-
 while contador<2 :
     menu()
     opcao=input()
@@ -76,8 +70,7 @@ while contador<2 :
     if i and v > 0:
         p=v*i
         r=v/i
-   
-        
+           
 
 print("\nOs resultados obtidos foram:")
 print(f"Tensão:{v}Volts\nCorrente:{i}Amperes\nResistência:{r}Ohms\nPotência:{p}Watts\n")
