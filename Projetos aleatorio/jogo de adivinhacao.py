@@ -8,15 +8,16 @@ def inicial():
     while l[0] <1:
         try:
             l[0]=int(input("Digite o inicio do intervalo entre os numeros:"))
-            while l[1]==0:
-                try:
-                    l[1]=int(input("Digite o numero final do intervalo entre os numeros:"))
-                    
-                except:
-                    print("Digite um numero inteiro")
+            
                     
         except:
             print("Digite um numero inteiro")
+    while l[1]==0:
+        try:
+            l[1]=int(input("Digite o numero final do intervalo entre os numeros:"))
+                    
+        except:
+            print("Digite um numero inteiro")            
     return l
 
 inicial()
@@ -48,9 +49,9 @@ while resposta != l[2]:
                 tentativas=tentativas+1
                 print(f"errou num {tentativas}")
                 if resposta> l[2]:
-                    print("Voce adivinhou muito alto")
+                    print("Voce chutou muito alto")
                 if resposta< l[2]:
-                    print("Voce adivinhou muito baixo")
+                    print("Voce chutou muito baixo")
                 
     except:
         print("Digite um numero inteiro")
