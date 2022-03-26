@@ -1,4 +1,4 @@
-l=[1,2,3],[4,5,6],[7,8,9],[1]
+l=[1,2,3],[4,5,6],[7,8,9],[0]
 player=1
 def menu():
     print(" Bem vindo ao jogo da velha.\n Player 1 X e Player 2 O")  
@@ -7,20 +7,13 @@ def pedirlocal(): #pedir o local
         try:
             local=int(input("Digite o numero  do local:"))
             if local in range(1,10):
-                #print(local)
                 return local
             else:
                 print(" Digite um numero valido")
         except:
             print(" Opção invalida")          
 def mapa(): #mapa do game
-    print(f"""
-               {l[0][0]} l {l[0][1]} l {l[0][2]}
-               ---------
-               {l[1][0]} l {l[1][1]} l {l[1][2]}
-               ---------
-               {l[2][0]} l {l[2][1]} l {l[2][2]}
-          """)       
+    print(f"     {l[0][0]} l {l[0][1]} l {l[0][2]}\n     ---------\n     {l[1][0]} l {l[1][1]} l {l[1][2]}\n     ---------\n     {l[2][0]} l {l[2][1]} l {l[2][2]}")       
 def verificar(x,player): # verifica se ja foi o numero
     play=l[3][0]
     for i in range(3):
@@ -37,26 +30,28 @@ def verificar(x,player): # verifica se ja foi o numero
                     play=play+1  
                     l[3][0]=play      
                 return l        
-              
 def turn(player): #verifica o turno
     play=player%2
     if play==0:
-        #print("A")
         return "A"
     if play==1:
-        #print("B")
         return "B"  
-
-         
+def win(jogador): #nome ja diz tudo
+    for i in range(3):
+        if ((l[i][0]) ==(l[i][1])) and((l[i][1])== (l[i][2])):
+            print(f"linha {jogador}")
+            exit()
+        if ((l[0][i]) ==(l[1][i])) and((l[1][i])== (l[2][i])):
+            print(f"coluna {jogador}")
+            exit()
+        if (((l[0][0]) ==(l[1][1])) and((l[1][1])== (l[2][2])) or (((l[0][2]) ==(l[1][1])) and((l[1][1])== (l[2][0])))):
+            print(f"ganhou em x {jogador}")
+            exit() 
 def partida(): #funcionamento do game
     menu()
     while True:
         player=l[3][0]
-        
+        win(turn(player))
         mapa()
-        verificar(pedirlocal(),turn(player))
-        
-        
-        #print(player)       
+        verificar(pedirlocal(),turn(player))           
 partida() 
-#print(f" o local foi {pedirlocal()}")   
