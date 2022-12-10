@@ -6,8 +6,7 @@ import math
 
 #SITE E O HEADER
 url = 'https://store.playstation.com/pt-br/category/35027334-375e-423b-b500-0d4d85eff784/1?GAME_BUNDLE=storeDisplayClassification&FULL_GAME=storeDisplayClassification&PREMIUM_EDITION=storeDisplayClassification'
-headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36  \
-          (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 OPR/92.0.0.0'}
+headers={'User-Agent': '#Coloque seu Agente aqui, jogue no google my user agent#'}
 
 #PROCURAR
 
