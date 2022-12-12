@@ -1,0 +1,64 @@
+import requests 
+from bs4 import BeautifulSoup 
+import re
+import pandas as pd
+import math
+
+#SITE E O HEADER
+url = 'https://store.playstation.com/pt-br/category/35027334-375e-423b-b500-0d4d85eff784/1?GAME_BUNDLE=storeDisplayClassification&FULL_GAME=storeDisplayClassification&PREMIUM_EDITION=storeDisplayClassification'
+headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36  \
+          (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 OPR/92.0.0.0'}
+
+#PROCURAR
+
+site= requests.get(url, headers=headers, timeout=10)
+soup= BeautifulSoup(site.content,'html.parser')
+
+jogo= soup.find ('span',class_= "psw-t-body psw-c-t-1 psw-t-truncate-2 psw-m-b-2").get_text().strip() 
+
+preco= soup.find ('span',class_= "psw-m-r-3").get_text().strip() 
+
+original= soup.find ('s',class_= "psw-c-t-2").get_text().strip() 
+#desconto
+
+ultima_pagina=math.ceil(1200/24)
+lista_jogos={'jogo':[],'preco original':[],'%Desconto':[],'preco':[],'link':[],'imagem':[]}
+for i in range(1, 21):
+    url_pag= (f'https://store.playstation.com/pt-br/category/35027334-375e-423b-b500-0d4d85eff784/{i}?GAME_BUNDLE=storeDisplayClassification&FULL_GAME=storeDisplayClassification&PREMIUM_EDITION=storeDisplayClassification')
+    site= requests.get(url_pag, headers=headers, timeout=10)
+    soup= BeautifulSoup(site.content,'html.parser')
+    produtos= soup.find_all('li',class_= re.compile(' psw-l-w-1/8@desktop'))
+
+    for produto in produtos:
+
+        jogo= produto.find('span', class_=re.compile('psw-t-body psw-c-t-1 psw-t-truncate-2 psw-m-b-2')).get_text().strip()
+        preco= produto.find('span', class_=re.compile('psw-m-r-3')).get_text().strip()
+        link= produto.find('a')#acha a classe do link
+      
+        jok={link.get('href')}#acha o link
+        tranlink=str(jok).strip("{}' ")
+
+        imagem= produto.find('img')
+        imagens=(str(imagem.get('src')).strip("{}' "))
+    
+        
+        linkcompleto=(f'https://store.playstation.com{tranlink}')
+        try:
+            poriginal=produto.find('s',class_=re.compile('psw-c-t-2')).get_text().strip()
+            pdesconto=produto.find ('span',class_= 'psw-body-2 psw-badge__text psw-badge--none psw-text-bold psw-p-y-0 psw-p-2 psw-r-1 psw-l-anchor').get_text().strip() 
+ 
+        except:
+            poriginal='Sem preço antigo'
+            pdesconto='Sem desconto'
+        print(f"Nome:{jogo}\nPreço Original:{poriginal}\n%Desconto:{pdesconto}\nPreço:{preco}\nLink:{linkcompleto}\nImagem:{imagens[0:-16]}")
+        lista_jogos['jogo'].append(jogo)
+        lista_jogos['preco'].append(preco)
+        lista_jogos['%Desconto'].append(pdesconto)
+        lista_jogos['preco original'].append(poriginal)
+        lista_jogos['link'].append(linkcompleto)
+        lista_jogos['imagem'].append(imagens[0:-16])
+
+
+df= pd.DataFrame(lista_jogos)
+#df.to_csv('precojogos.csv', encoding='utf-8',sep=':') #tpassa os dados para o csv
+df.to_excel('nvjogo.xlsx') #passa os dados pro excel
